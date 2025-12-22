@@ -83,17 +83,31 @@ class HashMap {
     }
     return false;
   }
+
+  length() {
+    let theBuckets = this.listOfBuckets;
+    let amount = 0;
+    for (let bucket of theBuckets) {
+      for (let obj of bucket) {
+        if (obj) {
+          amount++;
+        }
+      }
+    }
+    return amount;
+  }
 }
 
 const test = new HashMap();
-test.set("Rama", 23);
-test.set("Sita", 33);
-test.set("hello", 100);
-test.set("apple", 200);
-test.set("apple", 300);
-test.remove("apple");
+// test.set("Rama", 23);
+// test.set("Sita", 33);
+// test.set("hello", 100);
+// test.set("apple", 200);
+// test.set("apple", 300);
+// test.remove("apple");
 
 console.log(test);
 
 console.log(test.get("Sita"));
 console.log(test.has("apple"));
+console.log(test.length());
