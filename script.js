@@ -109,6 +109,19 @@ class HashMap {
       }
     }
   }
+
+  keys() {
+    let theBuckets = this.listOfBuckets;
+    let arr = [];
+    for (let bucket of theBuckets) {
+      for (let obj of bucket) {
+        if (obj) {
+          arr.push(obj.key);
+        }
+      }
+    }
+    return arr;
+  }
 }
 
 const test = new HashMap();
@@ -117,10 +130,11 @@ test.set("Sita", 33);
 test.set("hello", 100);
 test.set("apple", 200);
 test.set("apple", 300);
-test.remove("apple");
-test.clear();
+// test.remove("apple");
+// test.clear();
 console.log(test);
 
 console.log(test.get("Sita"));
 console.log(test.has("apple"));
 console.log(test.length());
+console.log(test.keys());
