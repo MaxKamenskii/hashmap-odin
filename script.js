@@ -67,6 +67,22 @@ class HashMap {
     }
     return false;
   }
+
+  remove(theKey) {
+    let theBuckets = this.listOfBuckets;
+
+    for (let bucket of theBuckets) {
+      for (let obj of bucket) {
+        if (obj) {
+          if (obj.key == theKey) {
+            let index = bucket.indexOf(obj);
+            bucket.splice(index, 1);
+          }
+        }
+      }
+    }
+    return false;
+  }
 }
 
 const test = new HashMap();
@@ -75,7 +91,9 @@ test.set("Sita", 33);
 test.set("hello", 100);
 test.set("apple", 200);
 test.set("apple", 300);
-// console.log(test);
+test.remove("apple");
+
+console.log(test);
 
 console.log(test.get("Sita"));
 console.log(test.has("apple"));
