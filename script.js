@@ -96,16 +96,29 @@ class HashMap {
     }
     return amount;
   }
+
+  clear() {
+    let theBuckets = this.listOfBuckets;
+
+    for (let bucket of theBuckets) {
+      for (let i = bucket.length - 1; i >= 0; i--) {
+        if (bucket[i]) {
+          let index = bucket.indexOf(bucket[i]);
+          bucket.splice(index, 1);
+        }
+      }
+    }
+  }
 }
 
 const test = new HashMap();
-// test.set("Rama", 23);
-// test.set("Sita", 33);
-// test.set("hello", 100);
-// test.set("apple", 200);
-// test.set("apple", 300);
-// test.remove("apple");
-
+test.set("Rama", 23);
+test.set("Sita", 33);
+test.set("hello", 100);
+test.set("apple", 200);
+test.set("apple", 300);
+test.remove("apple");
+test.clear();
 console.log(test);
 
 console.log(test.get("Sita"));
