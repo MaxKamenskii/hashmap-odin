@@ -52,6 +52,21 @@ class HashMap {
     }
     return null;
   }
+
+  has(theKey) {
+    let theBuckets = this.listOfBuckets;
+
+    for (let bucket of theBuckets) {
+      for (let obj of bucket) {
+        if (obj) {
+          if (obj.key == theKey) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
 }
 
 const test = new HashMap();
@@ -63,3 +78,4 @@ test.set("apple", 300);
 // console.log(test);
 
 console.log(test.get("Sita"));
+console.log(test.has("apple"));
