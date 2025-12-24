@@ -78,14 +78,15 @@ class HashMap {
   remove(theKey) {
     let theBuckets = this.listOfBuckets;
 
-    for (let bucket of theBuckets) {
-      for (let obj of bucket) {
-        if (obj) {
-          if (obj.key == theKey) {
-            let index = bucket.indexOf(obj);
-            bucket.splice(index, 1);
-            this.numb--;
-          }
+    let ind = this.hash(theKey);
+    let bucket = theBuckets[ind];
+    for (let obj of bucket) {
+      if (obj) {
+        if (obj.key == theKey) {
+          let index = bucket.indexOf(obj);
+          bucket.splice(index, 1);
+          this.numb--;
+          return true;
         }
       }
     }
