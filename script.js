@@ -3,6 +3,7 @@ class HashMap {
     this.capacity = 16;
     this.loadFactor = 0.75;
     this.listOfBuckets = [];
+    this.numb = 0;
     for (let i = 0; i < this.capacity; i++) {
       let obj = [];
       this.listOfBuckets.push(obj);
@@ -11,13 +12,12 @@ class HashMap {
 
   hash(key) {
     let hashCode = 0;
-
     const primeNumber = 31;
     for (let i = 0; i < key.length; i++) {
       hashCode = primeNumber * hashCode + key.charCodeAt(i);
     }
 
-    let numb = hashCode % 16;
+    let numb = hashCode % this.capacity;
     return numb;
   }
 
@@ -25,16 +25,23 @@ class HashMap {
     let theHashCode = this.hash(theKey);
     let newObj = { key: theKey, value: theValue };
     let theBuckets = this.listOfBuckets[theHashCode];
+    let foundBucket;
     if (theBuckets.length > 0) {
       for (let bucket of theBuckets) {
         if (bucket.key == newObj.key) {
-          bucket.value = newObj.value;
-        } else {
-          theBuckets.push(newObj);
+          foundBucket = bucket;
         }
+      }
+      if (!foundBucket) {
+        theBuckets.push(newObj);
+        this.numb++;
+        return;
+      } else if (foundBucket) {
+        foundBucket.value = newObj.value;
       }
     } else {
       theBuckets.push(newObj);
+      this.numb++;
     }
   }
 
@@ -77,6 +84,7 @@ class HashMap {
           if (obj.key == theKey) {
             let index = bucket.indexOf(obj);
             bucket.splice(index, 1);
+            this.numb--;
           }
         }
       }
@@ -85,16 +93,17 @@ class HashMap {
   }
 
   length() {
-    let theBuckets = this.listOfBuckets;
-    let amount = 0;
-    for (let bucket of theBuckets) {
-      for (let obj of bucket) {
-        if (obj) {
-          amount++;
-        }
-      }
-    }
-    return amount;
+    // let theBuckets = this.listOfBuckets;
+    // let amount = 0;
+    // for (let bucket of theBuckets) {
+    //   for (let obj of bucket) {
+    //     if (obj) {
+    //       amount++;
+    //     }
+    //   }
+    // }
+    // return amount;
+    return this.numb;
   }
 
   clear() {
@@ -108,6 +117,7 @@ class HashMap {
         }
       }
     }
+    this.numb = 0;
   }
 
   keys() {
@@ -122,19 +132,49 @@ class HashMap {
     }
     return arr;
   }
+  values() {
+    let theBuckets = this.listOfBuckets;
+    let arr = [];
+    for (let bucket of theBuckets) {
+      for (let obj of bucket) {
+        if (obj) {
+          arr.push(obj.value);
+        }
+      }
+    }
+    return arr;
+  }
+
+  entries() {
+    let theBuckets = this.listOfBuckets;
+    let arr = [];
+    for (let bucket of theBuckets) {
+      for (let obj of bucket) {
+        if (obj) {
+          let arrBucket = [];
+          arrBucket.push(obj.key);
+          arrBucket.push(obj.value);
+          arr.push(arrBucket);
+        }
+      }
+    }
+    return arr;
+  }
 }
 
 const test = new HashMap();
-test.set("Rama", 23);
-test.set("Sita", 33);
-test.set("hello", 100);
-test.set("apple", 200);
-test.set("apple", 300);
-// test.remove("apple");
-// test.clear();
-console.log(test);
 
-console.log(test.get("Sita"));
-console.log(test.has("apple"));
-console.log(test.length());
-console.log(test.keys());
+test.set("apple", "red");
+// test.set("banana", "yellow");
+// test.set("carrot", "orange");
+// test.set("dog", "brown");
+// test.set("elephant", "gray");
+// test.set("frog", "green");
+// test.set("grape", "purple");
+// test.set("hat", "black");
+// test.set("ice cream", "white");
+// test.set("jacket", "blue");
+// test.set("kite", "pink");
+// test.set("lion", "golden");
+
+console.log(test);
