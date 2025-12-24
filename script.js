@@ -63,12 +63,12 @@ class HashMap {
   has(theKey) {
     let theBuckets = this.listOfBuckets;
 
-    for (let bucket of theBuckets) {
-      for (let obj of bucket) {
-        if (obj) {
-          if (obj.key == theKey) {
-            return true;
-          }
+    let index = this.hash(theKey);
+    let bucket = theBuckets[index];
+    for (let obj of bucket) {
+      if (obj) {
+        if (obj.key == theKey) {
+          return true;
         }
       }
     }
