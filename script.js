@@ -2,11 +2,29 @@ class HashMap {
   constructor() {
     this.capacity = 16;
     this.loadFactor = 0.75;
-    this.listOfBuckets = [];
     this.numb = 0;
+    this.listOfBuckets = [];
     for (let i = 0; i < this.capacity; i++) {
       let obj = [];
       this.listOfBuckets.push(obj);
+    }
+  }
+
+  resize() {
+    let oldListOfBuckets = this.listOfBuckets;
+    this.capacity = this.capacity * 2;
+    this.listOfBuckets = [];
+    this.numb = 0;
+    for (let i = 0; i < this.capacity; i++) {
+      let bucket = [];
+      this.listOfBuckets.push(bucket);
+    }
+    for (let buck of oldListOfBuckets) {
+      for (let obj of buck) {
+        if (obj) {
+          this.set(obj.key, obj.value);
+        }
+      }
     }
   }
 
@@ -22,6 +40,10 @@ class HashMap {
   }
 
   set(theKey, theValue) {
+    let load = this.capacity * this.loadFactor;
+    if (this.numb >= load) {
+      this.resize();
+    }
     let theHashCode = this.hash(theKey);
     let newObj = { key: theKey, value: theValue };
     let theBuckets = this.listOfBuckets[theHashCode];
@@ -178,6 +200,10 @@ test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
 
+console.log(test);
+test.set("lion", "orange");
 console.log(test.get("lion"));
+test.set("moon", "silver");
 
+console.log(test.length());
 console.log(test);
